@@ -29,25 +29,42 @@ let slides = [
 
 let slide = document.getElementById(`slide`);
 
-slide.innerHTML = `<div class="row">
-    <div class="col-img">
+slide.innerHTML = `
         <img src="./img/${slides[0].percorso}" alt="">
         <div class="absolute">
             <h4>${slides[0].titolo}</h4>
             <p>${slides[0].descrizione}</p>
         </div>
-    </div>
-    <div class="col-thumb">
-        <img src="./img/01.webp" alt="">
-        <img src="./img/02.webp" alt="">
-        <img src="./img/03.webp" alt="">
-        <img src="./img/04.webp" alt="">
-        <img src="./img/05.webp" alt="">
-    </div>
-    </div>
 `;
 
 let slideActive = 0;
+
+let thumb = document.querySelectorAll(".col-thumb img");
+
+thumb[0].addEventListener(`click`, function () {
+	slideActive = 0;
+	slide.innerHTML = stampaSlide();
+});
+
+thumb[1].addEventListener(`click`, function () {
+	slideActive = 1;
+	slide.innerHTML = stampaSlide();
+});
+
+thumb[2].addEventListener(`click`, function () {
+	slideActive = 2;
+	slide.innerHTML = stampaSlide();
+});
+
+thumb[3].addEventListener(`click`, function () {
+	slideActive = 3;
+	slide.innerHTML = stampaSlide();
+});
+
+thumb[4].addEventListener(`click`, function () {
+	slideActive = 4;
+	slide.innerHTML = stampaSlide();
+});
 
 document.getElementById(`next`).addEventListener(`click`, function () {
 	if (slideActive < 4) {

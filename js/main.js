@@ -27,8 +27,10 @@ let slides = [
 	},
 ];
 
+// variabile per elemento della pagina
 let slide = document.getElementById(`slide`);
 
+// imposto la prima immagine che si dovrà vedere all'apertura della pagina
 slide.innerHTML = `
         <img src="./img/${slides[0].percorso}" alt="">
         <div class="absolute">
@@ -37,8 +39,10 @@ slide.innerHTML = `
         </div>
 `;
 
+// variabile per slide attiva
 let slideActive = 0;
 
+// array per le immagini miniature
 let thumb = document.querySelectorAll(".col-thumb img");
 
 thumb[0].addEventListener(`click`, function () {
@@ -66,6 +70,7 @@ thumb[4].addEventListener(`click`, function () {
 	slide.innerHTML = stampaSlide();
 });
 
+// al click su bottone next le slide vanno avanti
 document.getElementById(`next`).addEventListener(`click`, function () {
 	if (slideActive < 4) {
 		slideActive++;
@@ -76,6 +81,7 @@ document.getElementById(`next`).addEventListener(`click`, function () {
 	}
 });
 
+// al click su bottone prev le slide vanno indietro
 document.getElementById(`prev`).addEventListener(`click`, function () {
 	if (slideActive > 0) {
 		slideActive--;
@@ -84,6 +90,42 @@ document.getElementById(`prev`).addEventListener(`click`, function () {
 		slideActive = 4;
 		slide.innerHTML = stampaSlide();
 	}
+});
+
+// interval per far andare avanti le slide ogni tot secondi
+let myInterval;
+document.getElementById(`autoplay`).addEventListener(`click`, function () {
+	clearInterval(myIntervalReverse);
+	myInterval = setInterval(() => {
+		if (slideActive < 4) {
+			slideActive++;
+			slide.innerHTML = stampaSlide();
+		} else {
+			slideActive = 0;
+			slide.innerHTML = stampaSlide();
+		}
+	}, 1000);
+});
+
+// al click interrompo gli interval
+document.getElementById(`stop`).addEventListener(`click`, function () {
+	clearInterval(myInterval);
+	clearInterval(myIntervalReverse);
+});
+
+// interval per far andare indietro le slide ogni tot secondi
+let myIntervalReverse;
+document.getElementById(`reverse`).addEventListener(`click`, function () {
+	clearInterval(myInterval);
+	myIntervalReverse = setInterval(() => {
+		if (slideActive > 0) {
+			slideActive--;
+			slide.innerHTML = stampaSlide();
+		} else {
+			slideActive = 4;
+			slide.innerHTML = stampaSlide();
+		}
+	}, 1000);
 });
 
 // slides.forEach((elemento) => {

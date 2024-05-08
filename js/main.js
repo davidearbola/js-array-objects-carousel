@@ -27,7 +27,7 @@ let slides = [
 	},
 ];
 
-// variabile per elemento della pagina
+// variabile per elemento della pagina dove andranno le slide
 let slide = document.getElementById(`slide`);
 
 // imposto la prima immagine che si dovrà vedere all'apertura della pagina
@@ -42,37 +42,21 @@ slide.innerHTML = `
 // variabile per slide attiva
 let slideActive = 0;
 
+// variabile per elemento che contiene thumbnails
+let thumbNails = document.getElementById(`thumb`);
+
+// stampo le thumbnails
+stampaThumb(slides);
+
 // array per le immagini miniature
 let thumb = document.querySelectorAll(".col-thumb img");
 
-thumb[0].addEventListener(`click`, function () {
-	slideActive = 0;
-	slide.innerHTML = stampaSlide();
-});
-
-thumb[1].addEventListener(`click`, function () {
-	slideActive = 1;
-	slide.innerHTML = stampaSlide();
-});
-
-thumb[2].addEventListener(`click`, function () {
-	slideActive = 2;
-	slide.innerHTML = stampaSlide();
-});
-
-thumb[3].addEventListener(`click`, function () {
-	slideActive = 3;
-	slide.innerHTML = stampaSlide();
-});
-
-thumb[4].addEventListener(`click`, function () {
-	slideActive = 4;
-	slide.innerHTML = stampaSlide();
-});
+// richiamo funzione che aggiunge eventlistener ad ogni thumb
+aggiungiClick(thumb);
 
 // al click su bottone next le slide vanno avanti
 document.getElementById(`next`).addEventListener(`click`, function () {
-	if (slideActive < 4) {
+	if (slideActive < slides.length - 1) {
 		slideActive++;
 		slide.innerHTML = stampaSlide();
 	} else {
@@ -87,7 +71,7 @@ document.getElementById(`prev`).addEventListener(`click`, function () {
 		slideActive--;
 		slide.innerHTML = stampaSlide();
 	} else {
-		slideActive = 4;
+		slideActive = slides.length - 1;
 		slide.innerHTML = stampaSlide();
 	}
 });
@@ -97,7 +81,7 @@ let myInterval;
 document.getElementById(`autoplay`).addEventListener(`click`, function () {
 	clearInterval(myIntervalReverse);
 	myInterval = setInterval(() => {
-		if (slideActive < 4) {
+		if (slideActive < slides.length - 1) {
 			slideActive++;
 			slide.innerHTML = stampaSlide();
 		} else {
@@ -105,12 +89,6 @@ document.getElementById(`autoplay`).addEventListener(`click`, function () {
 			slide.innerHTML = stampaSlide();
 		}
 	}, 1000);
-});
-
-// al click interrompo gli interval
-document.getElementById(`stop`).addEventListener(`click`, function () {
-	clearInterval(myInterval);
-	clearInterval(myIntervalReverse);
 });
 
 // interval per far andare indietro le slide ogni tot secondi
@@ -122,29 +100,14 @@ document.getElementById(`reverse`).addEventListener(`click`, function () {
 			slideActive--;
 			slide.innerHTML = stampaSlide();
 		} else {
-			slideActive = 4;
+			slideActive = slides.length - 1;
 			slide.innerHTML = stampaSlide();
 		}
 	}, 1000);
 });
 
-// slides.forEach((elemento) => {
-// 	slide.innerHTML = `
-//     <div class="row">
-//     <div class="col-img">
-//         <img src="./img/${elemento.percorso}" alt="">
-//         <div class="absolute">
-//             <h4>${elemento.titolo}</h4>
-//             <p>${elemento.descrizione}</p>
-//         </div>
-//     </div>
-//     <div class="col-thumb">
-//         <img src="./img/01.webp" alt="">
-//         <img src="./img/02.webp" alt="">
-//         <img src="./img/03.webp" alt="">
-//         <img src="./img/04.webp" alt="">
-//         <img src="./img/05.webp" alt="">
-//     </div>
-//     </div>
-//     `;
-// });
+// al click interrompo gli interval
+document.getElementById(`stop`).addEventListener(`click`, function () {
+	clearInterval(myInterval);
+	clearInterval(myIntervalReverse);
+});

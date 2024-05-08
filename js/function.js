@@ -7,3 +7,18 @@ function stampaSlide() {
         </div>
 `;
 }
+
+function stampaThumb(array) {
+	for (let i = 0; i < array.length; i++) {
+		thumbNails.innerHTML += `<img src="./img/${slides[i].percorso}" alt=""></img>`;
+	}
+}
+
+function aggiungiClick(array) {
+	for (let i = 0; i < array.length; i++) {
+		array[i].addEventListener(`click`, function () {
+			slideActive = i;
+			slide.innerHTML = stampaSlide();
+		});
+	}
+}
